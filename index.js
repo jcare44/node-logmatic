@@ -1,1 +1,1 @@
-module.exports = require('./src/reporter');
+module.exports = require('./src/logmatic');
