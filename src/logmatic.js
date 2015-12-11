@@ -12,7 +12,7 @@ function Logmatic(config, f) {
       port: 10515
     },
     retryTimeout: 5000,
-    defaultMessage: {},
+    defaultProps: {},
     logger: {
       debug: _.noop,
       info: console.log.bind(console),
@@ -24,7 +24,7 @@ function Logmatic(config, f) {
 
   this.messageBuffer = [];
 
-  if (!_.isString(this.config.token)) {
+  if (!_.isString(this.config.token) || this.config.token === '') {
     throw new Error('The token wasn\'t specified');
   }
 
@@ -89,7 +89,7 @@ _.extend(Logmatic.prototype, {
     }
 
     try {
-      message = JSON.stringify(_.defaultsDeep({}, message, this.config.defaultMessage));
+      message = JSON.stringify(_.defaultsDeep({}, message, this.config.defaultProps));
     } catch (e) {
       return this.logger.error('Logmatic - error while parsing log message. Not sending', e);
     }
